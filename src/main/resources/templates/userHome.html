@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet"  th:href="@{css/bootstrap.min.css}"
+          href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="../static/js/script.js"></script>
+    <link rel="stylesheet" href="../static/css/all.min.css">
+    <title>Home</title>
+</head>
+<body>
+
+
+<div class="page">
+
+    <div class="sidebar">
+
+        <div class="sidebar-header">
+            <div class="sidebar-logo-container">
+                <div class="logo-container">
+                    <img class="logo-sidebar" src="/static/img/logo-RoomMate.png" th:src="@{/static/img/logo-RoomMate.png}" alt="logo RoomMate"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-body">
+            <ul class="navigation-list">
+                <li class="navigation-list-item active">
+                    <div class="row">
+                        <a class="navigation-link" href="userHome.html">
+                            <i class="fa-solid fa-house"> </i> Home
+                        </a>
+                    </div>
+                </li>
+                <li class="navigation-list-item">
+                    <a class="navigation-link" href="UserBooking.html">My Bookings</a>
+                </li>
+                <li class="navigation-list-item">
+                    <div class="row">
+                        <a class="navigation-link" href="userEditProfil.html">
+                            <i class="m-1 fa-solid fa-user"></i> User
+                        </a>
+                    </div>
+                </li>
+                <li class="navigation-list-item">
+                    <div class="row">
+                        <a class="navigation-link" href="login.html">
+                            Log out
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content row">
+        <h3>Hallo Max!</h3>
+    </div>
+
+</div>
+
+<div class="body-content">
+
+    <div class="container mt-3">
+        <h4>Rooms Overview</h4>
+
+        <!-- <p>The .table-striped class adds zebra-stripes to a table:</p> -->
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="datatable-search-input">Search</label>
+            <input type="search" class="form-control search-input" id="datatable-search-input">
+        </div>
+        <div id="datatable"></div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Room Name</th>
+                <th>Number Workplace</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Doe</td>
+                <td>-</td>
+                <td>john@example.com</td>
+                <td>
+                    <button type="button" class="btn btn-outline-secondary my-btn" >
+                        <a class="btn-outline-secondary my-btn" href="userRoomDetails.html">Details</a></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+</html>

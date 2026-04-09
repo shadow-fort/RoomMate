@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet"  th:href="@{css/bootstrap.min.css}"
+          href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="../static/js/script.js"></script>
+    <link rel="stylesheet" href="../static/css/all.min.css">
+    <title>View Users For Admin</title>
+</head>
+<body>
+<div class="page-content-signUpIn d-flex align-items-center">
+    <div class="container d-flex justify-content-center">
+        <div class="col-20 col-sm-18 col-md-16 col-lg-14 col-xl-12 col-xxl-10">
+            <div class="auth-card">
+
+                <a href="adminHome.html"><i class="fa-solid fa-circle-arrow-left arrow-back"></i></a>
+
+                <h3 class="mt-5">List Of Users</h3>
+
+                <button class="btn btn-info my-btn mt-2 mb-2" onclick="togglePopupForAddingNewWorkplace()">Add new
+                    Admin
+                </button>
+
+                <hr class="separator">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Rolle</th>
+                        <th>First Name</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                        <th>Users Reservation</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>User</td>
+                        <td>John</td>
+                        <td>Snow</td>
+                        <td>johnsnow@yahoo.com</td>
+                        <td>
+                            Link
+                        </td>
+                        <td>
+                            locked
+                        </td>
+                        <td>
+                            <i class="fa-solid fa-trash"></i>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+</html>
