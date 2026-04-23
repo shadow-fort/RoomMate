@@ -1,27 +1,14 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet"  th:href="@{css/bootstrap.min.css}"
-          href="../static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <script src="../static/js/script.js"></script>
-    <link rel="stylesheet" href="../static/css/all.min.css">
-    <title>View Users For Admin</title>
-</head>
+<head th:replace="~{fragments/globalHeader :: headofhtml(title='Admin Home')}"></head>
+
 <body>
 <div class="page-content-signUpIn d-flex align-items-center">
     <div class="container d-flex justify-content-center">
         <div class="col-20 col-sm-18 col-md-16 col-lg-14 col-xl-12 col-xxl-10">
             <div class="auth-card">
 
-                <a href="adminHome.html"><i class="fa-solid fa-circle-arrow-left arrow-back"></i></a>
+                <a href="adminHome.html" th:href="@{/admin/home}"><i class="fa-solid fa-circle-arrow-left arrow-back"></i></a>
 
                 <h3 class="mt-5">List Of Users</h3>
 

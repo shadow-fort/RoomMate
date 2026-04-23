@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head  th:replace="~{global/globalHeader.html :: headofhtml(title = 'Home')}"> </head>
+<body>
+
+<div class="page">
+
+    <div class="sidebar">
+
+        <div class="sidebar-header">
+            <div class="sidebar-logo-container">
+                <div class="logo-container">
+                    <img class="logo-sidebar" src="../static/img/logo-RoomMate.png" th:src="@{/img/logo-RoomMate.png}"
+                         alt="logo RoomMate"/>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-body">
+            <ul class="navigation-list">
+                <li class="navigation-list-item">
+                    <div class="row">
+                        <a class="navigation-link" href="/userHome" th:href="@{/userHome}">
+                            <i class="fa-solid fa-house"> </i> Home
+                        </a>
+                    </div>
+                </li>
+                <li class="navigation-list-item">
+                    <a class="navigation-link" href="/userHome/userBooking" th:href="@{/userHome/userBooking}">My Bookings</a>
+                </li>
+                <li class="navigation-list-item">
+                    <div class="row">
+                        <a class="navigation-link" href="/userHome/userProfil" th:href="@{/userHome/userProfil}">
+                            <i class="m-1 fa-solid fa-userService"></i> My Profil
+                        </a>
+                    </div>
+                </li>
+                <li class="navigation-list-item">
+                    <div class="row">
+                        <form th:action="@{/logout}" method="post">
+                            <input class="btn btn-outline-secondary my-btn" type="submit" value="Logout">
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content row">
+        <h4>
+            Matching rooms for the current search: <span th:text="${selectedDescription}" >--</span>
+        </h4>
+    </div>
+
+    <div class="body-content">
+
+        <div class="container mt-3">
+            <div class="alert alert-danger" id="error-message" th:if="${error} != null" th:text="${error}">
+                Some error message
+            </div>
+
+            <div id="datatable"></div>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Room Name</th>
+                    <th>Workplace Number</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="room : ${rooms}">
+                    <td th:text="${room.getRoomName()}">Room Name</td>
+                    <td>
+                        <ul>
+                            <li th:each="workplace: ${room.getWorkplaces()}">
+                                <span th:text="${workplace.workplaceNummer()}"></span>
+                                <button type="button" class="btn btn-outline-secondary my-btn m-2 btn-info"
+                                th:attr="onclick=|togglePopupForBookingForSearchCriteria(
+                                [['${workplace.workplaceNummer()}']],
+                                [['${room.getRoomId()}']],
+                                [['${workplace.equipments()}']])|">
+                                    Book
+                                </button>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="popup" id="popup-1">
+    <div class="overlay"></div>
+    <div class="content mt-3">
+        <div class="container">
+            <div class="row">
+                <h6>Workplace <span>ID</span></h6>
+                <div class="col-sm-12">
+                    <div class="close-btn mt-3" onclick="togglePopupForBookingForSearchCriteria()">&times;</div>
+                    <form method="post" th:action="@{/userHome/userHomeWithSearchCriteria}" th:object="${bookinsForm}">
+                        <input type="hidden" name="username" th:value="${user}">
+                        <input type="hidden" name="roomId" id="selectedRoomID" value="" >
+                        <input type="hidden" name="bookingForWorkplace" id="selectedWorkplaceID"
+                               value="">
+                        <input type="hidden" name="selectedDescription" id="selectedDescriptionID" value="">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-4 padding-left-3">
+                                    <div class="row mt-2 mb-3">
+                                        <label for="dateID">Date</label>
+                                        <input type="date" class="auth-input" name="date"
+                                               id="dateID" th:value="${date}" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="row mt-2 mb-3">
+                                        <label for="startTimeID">Start Time</label>
+                                        <input type="time" class="auth-input" name="startTime"
+                                               id="startTimeID" th:value="${startTime}" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="row mt-2 mb-3">
+                                        <label for="endTimeID">End Time</label>
+                                        <input type="time" class="auth-input" name="endTime"
+                                               id="endTimeID" th:value="${endTime}" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="auth-btn mt-2 mb-3 btn-info" id="submitBtn">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous">
+
+</script>
+
+</body>
+</html>

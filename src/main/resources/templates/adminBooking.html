@@ -1,20 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet"  th:href="@{css/bootstrap.min.css}"
-          href="../static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <script src="../static/js/script.js"></script>
-    <link rel="stylesheet" href="../static/css/all.min.css">
-    <title>Admin Booking</title>
-</head>
+<head th:replace="~{fragments/globalHeader :: headofhtml(title='Admin Home')}"> </head>
 <body>
 
 
@@ -22,48 +8,9 @@
 
     <div class="sidebar">
 
-        <div class="sidebar-header">
-            <div class="sidebar-logo-container">
-                <div class="logo-container">
-                    <img class="logo-sidebar" src="/static/img/logo-RoomMate.png" th:src="@{/static/img/logo-RoomMate.png}" alt="logo RoomMate"/>
-                </div>
-            </div>
-        </div>
+        <div th:replace="~{fragments/logo :: logo}"></div>
 
-        <div class="sidebar-body">
-            <ul class="navigation-list">
-                <li class="navigation-list-item">
-                    <div class="row">
-                        <a class="navigation-link" href="adminHome.html">
-                            <i class="fa-solid fa-house"> </i> Home
-                            <div class="col-10">
-                            </div>
-                        </a>
-                    </div>
-                </li>
-                <li class="navigation-list-item active">
-                    <a class="navigation-link" href="adminBooking.html">Bookings</a>
-                </li>
-                <li class="navigation-list-item">
-                    <div class="row">
-                        <a class="navigation-link" href="adminViewUser.html">
-                            <i class="m-1 fa-solid fa-user"></i> Users
-                            <div class="col-10">
-                            </div>
-                        </a>
-                    </div>
-                </li>
-                <li class="navigation-list-item">
-                    <div class="row">
-                        <a class="navigation-link" href="login.html">
-                            Log out
-                            <div class="col-10">
-                            </div>
-                        </a>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        <div th:replace="~{fragments/sidebarBody :: sidebarBody(bookings)}"></div>
     </div>
 
     <div class="content row">

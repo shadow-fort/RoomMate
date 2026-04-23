@@ -1,8 +1,8 @@
-
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/globalHeader :: headofhtml(title='Admin Home')}"></head>
+<html lang="en">
+<head  th:replace="global/globalHeader.html :: headofhtml(title = 'Admin Home')"></head>
 <body>
+
 <div class="page">
 
     <div class="sidebar">
@@ -10,7 +10,8 @@
         <div class="sidebar-header">
             <div class="sidebar-logo-container">
                 <div class="logo-container">
-                    <img class="logo-sidebar" src="/static/img/logo-RoomMate.png" th:src="@{../img/logo-RoomMate.png}" alt="logo RoomMate"/>
+                    <img class="logo-sidebar" src="../static/img/logo-RoomMate.png" th:src="@{img/logo-RoomMate.png}"
+                         alt="logo RoomMate"/>
                 </div>
             </div>
         </div>
@@ -19,7 +20,7 @@
             <ul class="navigation-list">
                 <li class="navigation-list-item active">
                     <div class="row">
-                        <a class="navigation-link" href="adminHome.html" th:href="@{/adminHome}">
+                        <a class="navigation-link" href="/adminHome" th:href="@{/adminHome}">
                             <i class="fa-solid fa-house"> </i> Home
                             <div class="col-10">
                             </div>
@@ -27,105 +28,162 @@
                     </div>
                 </li>
                 <li class="navigation-list-item">
-                    <a class="navigation-link" href="adminBooking.html">Bookings</a>
+                    <a class="navigation-link" href="/adminHome/allBooking" th:href="@{/adminHome/allBooking}">
+                        All Bookings</a>
                 </li>
                 <li class="navigation-list-item">
                     <div class="row">
-                        <a class="navigation-link" href="adminViewUser.html">
-                            <i class="m-1 fa-solid fa-user"></i> Users
-                            <div class="col-10">
-                            </div>
+                        <a class="navigation-link" href="/adminHome/adminProfil" th:href="@{/adminHome/adminProfil}">
+                            <i class="m-1 fa-solid fa-person"></i> My Profil
                         </a>
                     </div>
                 </li>
-                <li class="navigation-list-item">
+                <li class="margin mt-5">
                     <div class="row">
-                        <a class="navigation-link" href="login.html">
-                            Log out
-                            <div class="col-10">
-                            </div>
-                        </a>
+                        <form th:action="@{/logout}" method="post">
+                            <input class="btn btn-outline-secondary my-btn btn-info" type="submit" value="Logout">
+                        </form>
                     </div>
                 </li>
             </ul>
         </div>
     </div>
-
     <div class="content row">
-        <h3>Hallo Admin!</h3>
-    </div>
-
-</div>
-
-<div class="body-content">
-
-    <div class="container mt-3">
-        <h4>Rooms Overview</h4>
-
-        <!-- <p>The .table-striped class adds zebra-stripes to a table:</p> -->
-
-
-        <button class="btn btn-info my-btn mt-2 mb-2" onclick="togglePopupForAddingNewRoom()">Add new Room</button>
-
-        <div class="form-outline mb-4">
-            <label class="form-label" for="datatable-search-input">Search</label>
-            <input type="search" class="form-control search-input" id="datatable-search-input">
-        </div>
-
-        <div id="datatable"></div>
-
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Room ID</th>
-                <th>Room Name</th>
-                <th>Status</th>
-                <th>Number Workplace</th>
-                <th>All Equipments in Room</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>1</td>
-                <td>John</td>
-                <td>Free</td>
-                <td>4</td>
-                <td><p>Monitor mit USB-C und 3USB,Tastatur mit Kabel</p></td>
-                <td>
-                    <button type="button" class="btn btn-outline-secondary my-btn" href="adminRoomDetails.html">
-                        <a class="btn-outline-secondary my-btn" href="adminRoomDetails.html">Edit Room</a></button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="container">
-        <div class="popup" id="popup-4">
-            <div class="overlay"></div>
-            <div class="content">
-                <div class="close-btn" onclick="togglePopupForAddingNewRoom()">&times;</div>
-                <h5>Add New Room</h5>
-                <div>
-                    <form action="">
-                        <div>
-                            <label for="romeNameID" class="form-control border-0">Room Name</label>
-                            <input type="text" class="form-control" name="roomName" id="romeNameID">
-                        </div>
-                        <div>
-                            <label for="NumberWorkplaceID" class="form-control border-0">Number Workplace</label>
-                            <input type="text" class="form-control" name="NumberWorkplace" id="NumberWorkplaceID">
-                        </div>
-                        <div>
-                            <button type="submit" class="my-btn mt-3 mb-3">Add</button>
-                        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-10">
+                    <h1>Hallo Admin <span th:text="${admin}">Max167</span>!</h1>
+                </div>
+                <div class="col-sm-2 mt-2">
+                    <form th:action="@{/userHome}" method="get">
+                        <button type="submit" class="btn btn-outline-secondary btn-info my-btn">
+                            User View
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="body-content">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9">
+                <h4>Rooms Overview</h4>
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-info my-btn mt-2 mb-2" onclick="togglePopupForAddingNewRoom()">Add new Room</button>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="container mt-3">
+
+        <div class="alert alert-danger" id="error-message" th:if="${error} != null" th:text="${error}">
+            Some error message
+        </div>
+        <div class="alert alert-success" id="success-message" th:if="${success} != null" th:text="${success}">
+            Some success message
+        </div>
+
+        <div id="datatable"></div>
+
+        <table class="table table-striped" th:object="${rooms}">
+            <thead>
+            <tr>
+                <th>Room Name</th>
+                <th>Workplace</th>
+                <th>Edit</th>
+                <th>Details</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody th:remove="all-but-first">
+            <tr th:each="room : ${rooms}">
+                <td th:text="${room.getRoomName()}">Doe</td>
+                <td th:text="${room.getNumbersWorkplaces()}">-</td>
+                <td>
+                   <button type="button" class="btn btn-outline-secondary my-btn btn-info"
+                            th:attr="onclick=|togglePopupForAdminEditRoom([['${room.getRoomId()}']], [['${room.getRoomName()}']])|">
+                        Edit
+                    </button>
+                </td>
+                <td>
+                    <form method="get" th:action="@{/adminHome/adminRoomDetails}">
+                        <input type="hidden" name="roomId" th:value="${room.getRoomId()}">
+                        <button type="submit" class="btn btn-outline-secondary my-btn btn-info">Details</button>
+                    </form>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-outline-secondary my-btn btn-info"
+                            th:attr="onclick=|togglePopupForDeletingRoom([['${room.getRoomId()}']], [['${room.getRoomName()}']])|">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="popup" id="popup-12">
+    <div class="overlay"></div>
+    <div class="content mt-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="close-btn" onclick="togglePopupForDeletingRoom()">&times;</div>
+                    <form method="post" th:action="@{/adminHome/deleteRoom}">
+                        <input type="hidden" name="roomToDeleteID" id="roomToDeleteID" value="">
+                        <p>Do you really want to delete this Room ?</p>
+                        <button type="submit" class="auth-btn mt-2 mb-3 btn-info" id="DeleteBtn">delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="popup" id="popup-9">
+    <div class="overlay"></div>
+    <div class="content">
+        <div class="close-btn" onclick="togglePopupForAdminEditRoom()">&times;</div>
+            <form method="post" th:action="@{/adminHome}" th:object="${roomForm}">
+                <div class="mb-3 mt-0">
+                    <input type="hidden" name ="roomId" id="roomId" th:value ="${roomId}">
+                    <label for="RoomNameID">Room Name</label>
+                    <hr class="separator">
+                    <input type="text" class="form-control auth-input" placeholder="Room Name" name="roomName"
+                        id="RoomNameID"  th:value="${roomName}" required>
+                </div>
+                <button type="submit" class="auth-btn mt-2 mb-3 btn-info" id="submit Btn">Submit</button>
+            </form>
+    </div>
+</div>
+
+<div class="container">
+    <div class="popup" id="popup-4">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="close-btn" onclick="togglePopupForAddingNewRoom()">&times;</div>
+            <h5>Add New Room</h5>
+            <hr class="separator">
+            <div>
+                <form th:action="@{/adminHome/addNewRoom}" method="post">
+                    <div>
+                        <label for="newRoomNameID" class="form-control border-0">Room Name</label>
+                        <input type="text" class="form-control" placeholder="Room Name" name="roomName"
+                               id="newRoomNameID" required>
+                    </div>
+                    <div>
+                        <button type="submit" class="auth-btn mt-2 mb-3 btn-info">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 

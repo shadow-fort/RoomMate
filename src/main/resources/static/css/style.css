@@ -12,6 +12,15 @@
     margin-bottom: 5%;
     margin-top: 1%;
 }
+.margin-login{
+    margin-left: 12%;
+    margin-top: 3%;
+}
+
+.margin{
+    margin-left: 30%;
+    margin-top: 5%;
+}
 
 .logo-area{
     padding: 10px 10%;
@@ -258,3 +267,4 @@
 .my-btn:hover{
     color: black;
 }
+

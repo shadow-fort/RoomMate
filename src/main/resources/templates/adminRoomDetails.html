@@ -1,151 +1,168 @@
 <!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet"  th:href="@{css/bootstrap.min.css}"
-          href="../static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <script src="../static/js/script.js"></script>
-    <link rel="stylesheet" href="../static/css/all.min.css">
-    <title>Room Details For Admin</title>
-</head>
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head  th:replace="~{global/globalHeader.html :: headofhtml(title = 'Rooms Overview')}"> </head>
 <body>
 <div class="page-content-signUpIn d-flex align-items-center">
     <div class="container d-flex justify-content-center">
         <div class="col-20 col-sm-18 col-md-16 col-lg-14 col-xl-12 col-xxl-10">
             <div class="auth-card">
-
-                <a href="adminHome.html"><i class="fa-solid fa-circle-arrow-left arrow-back"></i></a>
-
-                <h3 class="mt-5">Room ID Room Name</h3>
-
-                <button class="btn btn-info my-btn mt-2 mb-2" onclick="togglePopupForAddingNewWorkplace()">Add new
-                    Workplace
-                </button>
-
+                <a href="/" th:href="@{/}" ><i class="fa-solid fa-circle-arrow-left arrow-back"></i></a>
+                <div class="alert alert-danger" id="error-message" th:if="${error} != null" th:text="${error}">
+                    Some error message
+                </div>
+                <div class="container mt-5">
+                    <div class="row">
+                         <h3 class="col-sm-8">
+                            <span th:text="${room.getRoomName()}" >Name</span>
+                        </h3>
+                        <div class="col-sm-4">
+                            <button class="btn btn-info my-btn mt-2 mb-2"
+                                    th:onclick="togglePopupForAddingNewWorkplace()">Add new Workplace</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-success" id="success-message" th:if="${success} != null" th:text="${success}">
+                    Some success message
+                </div>
                 <hr class="separator">
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Workplace ID</th>
-                        <th>Workplace Name</th>
-                        <th>Description Equipment</th>
-                        <th>Status</th>
-                        <th>Uptade</th>
-                        <th>delete</th>
+                        <th>Workplace</th>
+                        <th>Equipments</th>
+                        <th>Block</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>A</td>
+                    <tbody th:remove="all-but-first">
+                    <tr th:each="selectedWorkplace : ${room.getWorkplaces()}">
+                        <td th:text="${selectedWorkplace.workplaceNummer()}">1</td>
+                        <td th:text="${selectedWorkplace.equipments()}"></td>
                         <td>
-                            <p>
-                                Monitor, Tastatur, Headset
-                            </p>
+                            <button type="button" class="btn btn-outline-secondary my-btn btn-info"
+                                    th:onclick="|togglePopupForBooking(${selectedWorkplace.workplaceNummer()})|">
+                                Block
+                            </button>
                         </td>
                         <td>
-                            locked
-                        </td>
-                        <td class="mr-3">
-                            <i class="fa-solid fa-pen-to-square" onclick="togglePopupForEditingWorkplace()"></i>
+                            <form method="get" th:action="@{/adminHome/adminRoomDetails/editWorkplace}" th:object="${roomForm}">
+                                <input type="hidden" name="workplaceNumber" th:value="${selectedWorkplace.workplaceNummer()}">
+                                <input type="hidden" name="workplaceStatus" th:value="${selectedWorkplace.status()}">
+                                <input type="hidden" name="equipmentDescription" th:value="${selectedWorkplace.equipments()}">
+                                  <input type="hidden" name="roomId" th:value="${room.getRoomId()}">
+                                <button type="submit" class="btn btn-outline-secondary my-btn btn-info">Edit</button>
+                            </form>
                         </td>
                         <td>
-                            <i class="fa-solid fa-trash"></i>
+                            <button type="button" class="btn btn-outline-secondary my-btn btn-info"
+                                    th:onclick="|togglePopupForDeletingWorkplace(${selectedWorkplace.workplaceNummer()})|">
+                                Delete
+                            </button>
                         </td>
                     </tr>
-
                     </tbody>
                 </table>
 
-
-                <div class="popup" id="popup-6">
+                <div class="popup" id="popup-10">
                     <div class="overlay"></div>
-
-                    <div class="content">
-                        <div class="close-btn" onclick="togglePopupForEditingWorkplace()">&times;</div>
+                    <div class="content mt-3">
                         <div class="container">
                             <div class="row">
-                                <h5>Workplace ID</h5>
-                                <div>
-                                    <form action="">
-                                        <div>
-                                            <label for="editWorkplaceNameID" class="form-control border-0">Workplace
-                                                Name</label>
-                                            <input type="text" class="form-control" name="editWorkplaceName"
-                                                   id="editWorkplaceNameID">
-                                        </div>
-                                        <div>
-                                            <label for="editWorkplceStatusID">workpalce Status</label>
-                                            <select name="workplceStatus" id="editWorkplceStatusID"
-                                                    class="form-control">
-                                                <option value="gesperrt">gesperrt</option>
-                                                <option value="nichtGesperrt">nicht gesperrt</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label for="editEquipmentID" class="form-control border-0">Equipment
-                                                Description</label>
-                                            <textarea name="EquipmentDescription" id="editEquipmentID" rows="5"
-                                                      class="form-control"></textarea>
-                                        </div>
-                                        <div>
-                                            <button type="submit" class="my-btn mt-3 mb-3">submit</button>
-                                        </div>
+                                <div class="col-sm-12">
+                                    <div class="close-btn mt-3" onclick="togglePopupForDeletingWorkplace()">&times;</div>
+                                    <form method="post" th:action="@{/adminHome/adminRoomDetails/deleteWorkplace}">
+                                        <input type="hidden" name="workplaceNumber" id="workplaceNumberID" value="">
+                                        <input type="hidden" name="roomID" th:value="${room.getRoomId()}">
+                                        <p>Do you really want to delete this Workplace? </p>
+                                        <button type="submit" class="auth-btn mt-2 mb-3 btn-info" id="DeleteBtn">Delete</button>
                                     </form>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="container">
+                    <div class="popup" id="popup-5">
+                        <div class="overlay"></div>
+                        <div class="content">
+                            <div class="close-btn" onclick="togglePopupForAddingNewWorkplace()">&times;</div>
+                            <h5>Add New Workplace</h5>
+                            <hr class="separator">
+                            <div>
+                                <form th:action="@{/adminHome/adminRoomDetails/addNewWorkplace}" th:object="${roomForm}" method="post">
+                                    <div>
+                                        <input type="hidden" name="roomId" th:value="${room.getRoomId()}">
+                                        <label for="workplaceNumbID" class="form-control border-0">Workplace Number</label>
+                                        <input type="text" class="form-control" placeholder="Workplace Number" name="workplaceNumber"
+                                        id="workplaceNumbID" th:value="${workplaceNumber}" required>
+                                        <label for="workplaceEquipmentID" class="form-control border-0">Equipments</label>
+                                        <input type="text" class="form-control" placeholder="Equipments" name="equipmentDescription"
+                                               id="workplaceEquipmentID" th:value="${equipmentDescription}" required>
+                                    </div>
+                                    <div>
+                                        <button type="submit" class="auth-btn mt-2 mb-3 btn-info">Add</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="popup" id="popup-1">
+                    <div class="overlay"></div>
+                    <div class="content mt-3">
+                        <div class="container">
+                            <div class="row">
+                                <h6>Workplace <span th:text="${bookingForWorkplace}">ID</span></h6>
+                                <div class="col-sm-12">
+                                    <div class="close-btn mt-3" onclick="togglePopupForBooking()">&times;</div>
+                                    <form method="post" th:action="@{/adminHome/adminRoomDetails}" th:object="${bookingsForm}">
+                                        <input type="hidden" name="roomId" th:value="${room.getRoomId()}">
+                                        <input type="hidden" name="bookingForWorkplace" id="selectedWorkplaceID" th:value="${bookingForWorkplace}">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-sm-4 padding-left-3">
+                                                    <div class="row mt-2 mb-3">
+                                                        <label for="dateID">Date</label>
+                                                        <input type="date" class="auth-input" placeholder=" " name="date"
+                                                               id="dateID" th:value="${date}" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="row mt-2 mb-3">
+                                                        <label for="startTimeID">Start Time</label>
+                                                        <input type="time" class="auth-input" name="startTime"
+                                                               id="startTimeID" th:value="${startTime}" >
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="row mt-2 mb-3">
+                                                        <label for="endTimeID">End Time</label>
+                                                        <input type="time" class="auth-input" name="endTime"
+                                                               id="endTimeID" th:value="${endTime}" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="auth-btn mt-2 mb-3 btn-info" id="submitBtn">Block</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-
-        <div class="popup" id="popup-5">
-            <div class="overlay"></div>
-            <div class="content">
-                <div class="close-btn" onclick="togglePopupForAddingNewWorkplace()">&times;</div>
-                <h5>Add Workplace: </h5>
-                <div>
-                    <form action="">
-                        <div>
-                            <label for="NewWorkplaceNameID" class="form-control border-0">Workplace Name</label>
-                            <input type="text" class="form-control" name="NewWorkplaceName" id="neWWorkplaceNameID">
-                        </div>
-                        <div>
-                            <label for="workplceStatusID">workpalce Status</label>
-                            <select name="workplceStatus" id="workplceStatusID" class="form-control">
-                                <option value="gesperrt">gesperrt</option>
-                                <option value="nichtGesperrt">nicht gesperrt</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="EquipmentID" class="form-control border-0">Equipment Description</label>
-                            <textarea name="EquipmentDescription" id="EquipmentID" rows="5"
-                                      class="form-control"></textarea>
-                        </div>
-                        <div>
-                            <button type="submit" class="my-btn mt-3 mb-3">submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
     </div>
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+</script>
 </body>
 </html>

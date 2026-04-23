@@ -1,20 +1,7 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet"  th:href="@{css/bootstrap.min.css}"
-          href="../static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <script src="../static/js/script.js"></script>
-    <link rel="stylesheet" href="../static/css/all.min.css">
-    <title>Home</title>
-</head>
+<head th:replace="~{fragments/globalHeader :: headofhtml(title='User Home')}"></head>
+
 <body>
 
 
@@ -22,48 +9,9 @@
 
     <div class="sidebar">
 
-        <div class="sidebar-header">
-            <div class="sidebar-logo-container">
-                <div class="logo-container">
-                    <img class="logo-sidebar" src="/static/img/logo-RoomMate.png" th:src="@{/static/img/logo-RoomMate.png}" alt="logo RoomMate"/>
-                </div>
-            </div>
-        </div>
+        <div th:replace="~{fragments/logo :: logo}"></div>
 
-        <div class="sidebar-body">
-            <ul class="navigation-list">
-                <li class="navigation-list-item">
-                    <div class="row">
-                        <a class="navigation-link" href="userHome.html">
-                            <i class="fa-solid fa-house"> </i> Home
-                            <div class="col-10">
-                            </div>
-                        </a>
-                    </div>
-                </li>
-                <li class="navigation-list-item">
-                    <a class="navigation-link" href="UserBooking.html">My Bookings</a>
-                </li>
-                <li class="navigation-list-item active">
-                    <div class="row">
-                        <a class="navigation-link" href="userEditProfil.html">
-                            <i class="m-1 fa-solid fa-user"></i> User
-                            <div class="col-10">
-                            </div>
-                        </a>
-                    </div>
-                </li>
-                <li class="navigation-list-item">
-                    <div class="row">
-                        <a class="navigation-link" href="login.html">
-                            Log out
-                            <div class="col-10">
-                            </div>
-                        </a>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        <div th:replace="~{fragments/sidebarBodyUser :: sidebarBodyUser(user)}"></div>
     </div>
 
     <div class="content row">
@@ -88,27 +36,27 @@
                                        id="editFirstNameID">
                             </div>
                             <div class="row m-3">
-                                <label for="SurnameID">First Name</label>
+                                <label for="SurnameID">Surname</label>
                                 <input type="text" class="auth-input" placeholder="User  Surname" id="SurnameID">
                             </div>
                             <div class="row m-3">
-                                <label for="editMailID">First Name</label>
+                                <label for="editMailID">EMail</label>
                                 <input type="email" class="auth-input" placeholder="User Email" id="editMailID">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="row m-3">
-                                <label for="editOldPasswordID">First Name</label>
+                                <label for="editOldPasswordID">Old Password</label>
                                 <input type="password" class="auth-input" placeholder="Old Password"
                                        id="editOldPasswordID">
                             </div>
                             <div class="row m-3">
-                                <label for="editNewPasswordID">First Name</label>
+                                <label for="editNewPasswordID">New Password</label>
                                 <input type="password" class="auth-input" placeholder="New Password"
                                        id="editNewPasswordID">
                             </div>
                             <div class="row m-3">
-                                <label for="editConfirmNewPasswordID">First Name</label>
+                                <label for="editConfirmNewPasswordID">New Password</label>
                                 <input type="password" class="auth-input" placeholder="Confirm New Password"
                                        id="editConfirmNewPasswordID">
                             </div>
