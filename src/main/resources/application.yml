@@ -1,0 +1,24 @@
+roommate:
+  rollen:
+    admin:
+
+server:
+  port: 8080
+
+spring:
+  datasource:
+    password: mySecret
+    username: user
+    url: jdbc:postgresql://localhost:5432/myRoommate
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${CLIENT_ID}
+            client-secret: ${CLIENT_SECRET}
+            scope: read:public_repo
+
+logging:
+  level:
+    root: error

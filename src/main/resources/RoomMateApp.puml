@@ -1,0 +1,69 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+class User{
+    -String username
+    -long userID
+    -String firstname
+    -String surname
+}
+
+class Administrator extends User{
+
+
+     +addNewRoom(long roomID, String RoomName)
+     +deleteRoom(long roomID, String RoomName)
+     +addNewWorkplace(long roomID, long workplaceID, Equipment: equipment, WorkPlaceStatus: workplaceStatus)
+     +changeWorkplaceStatus(long: roomID, long workplaceID, WorkPlaceStatus: workplaceStatus): boolean
+     +editWorkplace(long: roomID, long workplaceID, Equipment: equipment): void
+     +addWorkplaceEquipments(long: roomID, long workplaceID, Equipment: equipment)
+     +deleteBooking(long: roomID, long: bookingID): boolean
+     +updateBooking(long: roomID, long: bookingID): boolean
+     }
+
+
+class Users extends User{
+
+
+      +findAvailableWorkplace(SearchCriteria: criteria, long roomID, List<WorkPlace> allWorkplacesInTheRoom): List<WorkPlace>
+      +addNewBooking(long: bookingID, String: username, long roomID, long: workplaceID,
+                     LocalDate: date,LocalTime: startTime, LocalTime: endTime) : boolean
+      +deleteMyBooking(Booking id) : boolean
+      +updateMyBooking(Booking id,  LocalDate: newDate,LocalTime: newStartTime, LocalTime: newEndTime) : boolean
+
+}
+
+
+class Room{
+-long roomID
+-String roomName
+-List<WorkPlace> workplaces
+-int numberOfWorkplace
+}
+
+
+class WorkPlace{
+-long workplaceID
+-String equipmentDescription
+-WorkPlaceStatus workplaceStatus
+}
+
+class Booking{
+-long bookingID
+-long userID
+-long roomID
+-long workplaceID
+-LocalDate date
+-LocalTime startTime
+-LocalTime endTime
+}
+
+
+class SearchCriteria{
+-String equipmentDescription
+-LocalDate date
+-LocalTime startTime
+-LocalTime endTime
+}
+
+@enduml

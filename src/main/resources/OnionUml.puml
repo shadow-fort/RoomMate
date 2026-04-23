@@ -1,0 +1,12 @@
+@startuml
+[Stereotypes] <<..annotations..>>
+[Controller] <<..controllers..>>
+[Persistence] <<..repository..>>
+[Service] <<..service..>>
+
+[Controller] --> [Stereotypes]
+[Persistence] --> [Stereotypes]
+[Controller] --> [Service]
+[Service] --> [Persistence]
+
+@enduml
