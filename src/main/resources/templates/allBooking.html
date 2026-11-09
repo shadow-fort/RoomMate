@@ -1,42 +1,209 @@
 <!doctype html>
-<!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head  th:replace="~{global/globalHeader.html :: headofhtml(title = 'Status Workplace')}"> </head>
+<head  th:replace="~{global/globalHeader.html :: headofhtml(title = 'Bookings Overview')}"> </head>
 <body>
-<div class="page-content-signUpIn d-flex align-items-center">
-    <div class="container d-flex justify-content-center">
-        <div class="col-20 col-sm-18 col-md-16 col-lg-14 col-xl-12 col-xxl-10">
-            <div class="auth-card">
-                <a href="/adminHome/adminRoomDetails" th:href="@{/adminHome/adminRoomDetails(roomId=${room.getRoomId()})}" >
-                    <i class="fa-solid fa-circle-arrow-left arrow-back"></i></a>
-                <h3 class="mt-5">
-                    Workplace <span th:text="${workplaceNumber}" >Name</span> already reserved on:
-                </h3>
-                <hr class="separator">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Start time</th>
-                        <th>End time</th>
-                    </tr>
-                    </thead>
-                    <tbody th:remove="all-but-first">
-                    <tr th:each="booking : ${bookings}">
-                        <td th:text="${booking.getDate()}">1</td>
-                        <td th:text="${booking.getStartTime()}"></td>
-                        <td th:text="${booking.getEndTime()}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+
+<div class="page">
+
+    <div class="sidebar">
+
+        <div class="sidebar-header">
+            <div class="sidebar-logo-container">
+                <div class="logo-container">
+                    <img class="logo-sidebar" src="../static/img/logo-RoomMate.png" th:src="@{/img/logo-RoomMate.png}"
+                         alt="logo RoomMate"/>
+                </div>
             </div>
+        </div>
+
+        <div class="sidebar-body">
+            <ul class="navigation-list">
+                <li class="navigation-list-item">
+                    <div class="row">
+                        <a class="navigation-link" href="/adminHome" th:href="@{/adminHome}">
+                            <i class="fa-solid fa-house"> </i> Home
+                            <div class="col-10">
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="navigation-list-item active">
+                    <a class="navigation-link" href="/adminHome/allBooking" th:href="@{/adminHome/allBooking}">
+                        All Bookings</a>
+                </li>
+                <li class="navigation-list-item">
+                    <div class="row">
+                        <a class="navigation-link" href="/adminHome/adminProfil" th:href="@{/adminHome/adminProfil}">
+                            <i class="m-1 fa-solid fa-person"></i> My Profil
+                        </a>
+                    </div>
+                </li>
+                <li class="margin mt-5">
+                    <div class="row">
+                        <form th:action="@{/logout}" method="post">
+                            <input class="btn btn-outline-secondary my-btn btn-info" type="submit" value="Logout">
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content row">
+        <h1>All Bookings</h1>
+    </div>
+</div>
+
+<div class="body-content">
+
+    <div class="container mt-3">
+        <div id="datatable"></div>
+
+        <div class="alert alert-danger" id="error-message" th:if="${error} != null" th:text="${error}">
+            Some error message
+        </div>
+        <div class="alert alert-success" id="success-message" th:if="${success} != null" th:text="${success}">
+            Some success message
+        </div>
+        <div class="col-sm-3 m-6">
+            <div class="container">
+                <div class="row">
+                    <button type="button" class="btn btn-outline-secondary my-btn col-sm-6 btn-info" th:if="${filter == true}"
+                            th:onclick="togglePopupForSearching()">
+                        Filter
+                    </button>
+                    <form th:if="${reset == true}" th:action="@{/adminHome/allBooking}" method="get" class="col-sm-6">
+                        <button type="submit" class="btn btn-outline-secondary my-btn btn-info" th:href="@{/adminHome/allBooking}">
+                            Reset
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Room Name</th>
+                <th>Worplace Number</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody th:remove="all-but-first">
+            <tr th:each="booking : ${bookings}">
+                <td th:text="${booking.getUsername()}" >John</td>
+                <td th:text="${booking.getRoomName()}">Doe</td>
+                <td th:text="${booking.getWorkplaceNumber()}">A</td>
+                <td th:text="${booking.getGermainDate()}">29.03.2023</td>
+                <td th:text="${booking.getStartTime()}">11:00</td>
+                <td th:text="${booking.getEndTime()}">14:00</td>
+                <td>
+                    <button type="button" class="btn-info"
+                            th:attr="onclick=|togglePopupForUpdatingBook([['${booking.getId()}']],
+                           [['${booking.getDate()}']], [['${booking.getStartTime()}']],
+                           [['${booking.getEndTime()}']], [['${booking.getRoomName()}']],
+                           [['${booking.getWorkplaceNumber()}']])|">
+                        &#9999;
+                    </button>
+                </td>
+                <td>
+                    <button class="btn-danger btn-info"
+                            th:attr="onclick=|togglePopupForDeletingBook('${booking.getId()}')|" >
+                        &#128465;
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="popup" id="popup-3">
+    <div class="overlay"></div>
+    <div class="content">
+        <div class="close-btn" onclick="togglePopupForUpdatingBook()">&times;</div>
+        <h5>Update Booking </h5>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <form method="post" th:action="@{/adminHome/allBooking/adminUpdateUserBooking}" th:object="${bookingsForm}">
+                        <input type="hidden" name="bookingId" id="bookingToUpdateID" th:value="${bookingId}">
+                        <input type="hidden" name="bookingForRoom" id="bookingForRoom" th:value="${bookingForRoom}">
+                        <input type="hidden" name="bookingForWorkplace" id="bookingForWorkplace" th:value="${bookingForWorkplace}">
+                        <div class="row mt-2 mb-3">
+                            <label for="bookingForDate">Date</label>
+                            <input type="date" class="auth-input" placeholder="New Date" name="date"
+                                   id="bookingForDate" th:value="${date}">
+                        </div>
+                        <div class="row mt-2 mb-3">
+                            <label for="bookingForStart">New StartTime</label>
+                            <input type="time" class="auth-input" placeholder="New StartTime" name="startTime"
+                                   id="bookingForStart" th:value="${startTime}">
+                        </div>
+                        <div class="row mt-2 mb-3">
+                            <label for="bookingForEnD">New EndTime</label>
+                            <input type="time" class="auth-input" placeholder="New EndTime" name="endTime"
+                                   id="bookingForEnD" th:value="${endTime}">
+                        </div>
+                        <button type="submit" class="auth-btn mt-2 mb-3 btn-info" id="submitBtn">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="popup" id="popup-11">
+    <div class="overlay"></div>
+    <div class="content mt-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="close-btn" onclick="togglePopupForDeletingBook()">&times;</div>
+                    <form method="post" th:action="@{/adminHome/allBooking/adminDeleteBooking}">
+                        <input type="hidden" name="bookingToDeleteID" id="bookingToDeleteID" value="">
+                        <p>Do you really want to delete this booking ?</p>
+                        <button type="submit" class="auth-btn mt-2 mb-3 btn-info" id="DeleteBtn">delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="popup" id="popup-7">
+    <div class="overlay"></div>
+    <div class="content">
+        <div class="close-btn" th:onclick="togglePopupForSearching()">&times;</div>
+        <form th:action="@{/adminHome/allBooking/findUserBooking}" method="get">
+            <div>
+                <label class="form-control border-0"> Choose a Username</label>
+                <select class="form-select" id="userNameID" name="userName">
+                    <option value="" selected>Choose a Username</option>
+                    <option th:each="userName : ${userNames}" th:value="${userName}"
+                            th:text="${userName}">
+                    </option>
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="auth-btn mt-2 mb-3 my-btn btn-info">find</button>
+            </div>
+        </form>
+        <div>
+
         </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous">
-</script>
+        crossorigin="anonymous"></script>
 </body>
 </html>
+

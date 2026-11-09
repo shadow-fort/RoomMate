@@ -5,7 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import static com.example.controllers.start.MySimpleUrlAuthenticationSuccessHandler.determineTargetUrl;
+import static com.example.roommate.controllers.start.MySimpleUrlAuthenticationSuccessHandler.determineTargetUrl;
 
 @Controller
 public class StartController {
