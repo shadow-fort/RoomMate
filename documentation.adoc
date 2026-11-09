@@ -1,0 +1,106 @@
+== RoomMate - Dokumentation
+
+=== Einführung und Ziele
+Die folgende Dokumentation beschreibt die RoomMate-Anwendung, bei der über eine Website, Arbeitsplätze für bestimmte Zeiträume reserviert werden können.
+Außerdem muss es auch möglich sein spezifizierte Suchanfragen an verfügbare Plätze zu erstellen.
+Dabei sollen auch Benutzer mit Adminrechten existieren, die weitere Berechtigungen erhalten, wie z.B. das Überschreiben von Reservierungen.
+
+https://github.com/hhu-propra2-ws23/Organisation/blob/main/roommate.adoc[Hier^]
+sind die konkreten Anforderungen zu finden.
+
+[cols="1,10"]
+|=======================
+|Priorität  |Ziel
+|1          |User können nach Arbeitsplätzen und/oder Zeiträumen suchen.
+|2          |User können Reservierungen für einen bestimmten Zeitraum erstellen.
+|3          |Admins können Reservierungen überschreiben und löschen.
+|4          |Admins können die Ausstattung eines Platzes ändern.
+|5          |User können auch Reservierungen für wiederkehrende Zeiträume erstellen.
+|6          |Admins können Plätze für bestimmte Zeiten sperren.
+|7          |RoomMate soll mit KeyMaster interagieren.
+|=======================
+
+
+=== Einschränkungen
+* Das System wird mit Java implementiert werden.
+* Die Anwendung muss als Onion-Architektur umgesetzt werden.
+* Für jeden Arbeitsplatz wird die Ausstattung und der dazugehörende Raum gespeichert.
+* Das Projekt soll innerhalb eines Semesters fertiggestellt werden
+* Ein Programmierteam besteht aus maximal 4 Leuten
+
+=== Kontext und Reichweite
+* User/Admins melden sich über das externe System GitHub auf der Startseite an.
+* User suchen und reservieren Plätze.
+* Admins können Reservierungen und Arbeitsplätze bearbeiten.
+* Über das externe Berechtigungssystem KeyMaster werden Türen für bestimmte Personen zu bestimmten Zeiten freigegeben.
+
+image:https://www.planttext.com/api/plantuml/png/TP3H2i8m34NV-nNvWVx0aB61u407El5PiYreOMrdcmh-lTjqMn_qBRcStDmayuoEW-v0OCFMmSMJc-kyrSg8nkhU6Z8CEyL5g2DXJwyIFPEBjCfQNI9J91sjvvkZy-bmtI9ZZPx4Z86KNrz880zy7mPKWwoi4Olz22q32HJClQpe4SYp5rDAaEbAYEc8I8csfR_I39uUdmHZlx8R-OVjBBOVDYFJ3izx0m00[alt="not bad.",width=300,height=170]
+
+
+=== Lösungsstrategie
+Die Authentifizierung wird über GitHub bereitgestellt und somit wird im Programm entschieden, ob ein normaler Nutzer
+oder ein Admin angemeldet ist.
+Der Admin hat einen Bereich, indem alle Buchungen angezeigt werden, so kann er diese löschen und bearbeiten.
+Die Arbeitsplätze werden in den jeweiligen Räumen gespeichert. Zur Verwaltung der Räume wird ein Raum-Service erstellt.
+Zur Speicherung der Räume, Arbeitsplätze, Buchungen und Personen wird PostgreSQL verwendet.
+
+=== Komponentenansicht
+(Struktur des Quellcodes, Modularisierung)
+
+=== Laufzeitansicht
+(Wichtige Laufzeitszenarien)
+
+=== Entwicklungsansicht
+(Die technische Infrastruktur unter der das System läuft -> Hardware)
+
+=== Konzepte
+(Domain-Modelle, Onion-Architektur, Hauptbestimmungen)
+
+.Unterteilung in die Onion-Architektur:
+
+Domain Models:
+Booking, Room, Workplace, Person
+
+Application Services:
+BookingService, RoomService, UserService
+
+Database-Adapter:
+BookingRepositoryDAO, RoomRepositoryDAO, UserRepositoryDAO,
+BookingDTO, PersonDTO, RoomDTO, WorkplaceDTO,
+BookingRepositoryImpl, RoomRepositoryImpl, UserRepositoryImpl
+
+Web-Adapter:
+AdminController, StartController, UserController
+
+
+=== Architekturentscheidungen
+(Wichtige bzw. relevante Architekturentscheidungen)
+
+=== Qualitätsanforderungen
+
+==== Szenario #1 (entnommen aus Wochenblatt 14):
+
+. Eine Person mit Administrationsrechten kann einen neuen Arbeitsplatz in einem beliebigen Raum anlegen.
+Der Arbeitsplatz soll mit einem Monitor mit USB-C Anschluss, einem Telefon und einem Poster von David Hasselhoff ausgestattet sein.
+
+. Ein:e reguläre Benutzer:in kann alle Arbeitsplätze suchen, die mit dem Poster von David Hasselhoff ausgestattet sind und kann den Arbeitsplatz reservieren.
+
+. Eine andere Person kann denselben Arbeitsplatz nicht für denselben Zeitraum reservieren.
+
+. Nach der automatischen Synchronisierung wird die Belegung in KeyMaster angezeigt.
+
+=== Risiken und technische Forderungen
+(Welche potenziellen Probleme existieren noch in und außerhalb des Systems?)
+
+=== Glossar
+(Wichtige Fachwörte, "ubiquitous language")
+
+[cols="1,10"]
+|=======================
+|Term  |Definition
+|User          |Normaler Benutzer des Systems ohne Administratorrechte
+|Admin         |Spezieller Benutzer des Systems mit Administratorrechten
+|Room          |Raum mit Id, Namen und verfügbaren Arbeitsplätzen
+|Workplace     |Arbeitsplatz mit Nummer und Ausstattung
+|Booking       |Buchung eines Arbeitsplatzes für einen bestimmten Zeitraum
+|=======================

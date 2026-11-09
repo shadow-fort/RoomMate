@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    password: sa
+    username: sa
+    url: jdbc:h2:mem:myRoommate;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE;DB_CLOSE_DELAY=-1

@@ -1,6 +1,6 @@
 package com.example.roommate.application.service.repositories;
 
-import com.example.propra.roommate.domain.model.userAggregat.Person;
+import com.example.roommate.domain.model.userAggregat.Person;
 
 import java.util.List;
 

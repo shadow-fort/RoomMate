@@ -44,9 +44,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     testImplementation 'org.springframework.security:spring-security-test'
-    compileOnly 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 //  SpotBugs dependency
-    //compileOnly 'com.github.spotbugs:spotbugs-annotations:4.8.3'
+    compileOnly 'com.github.spotbugs:spotbugs-annotations:4.8.3'
 
 
 //    testImplementation 'com.tngtech.archunit:archunit-junit5-engine:1.0.1'

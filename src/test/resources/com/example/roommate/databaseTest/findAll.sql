@@ -1,0 +1,1 @@
+insert into room (room_name) values ('a'),('b'),('c');
